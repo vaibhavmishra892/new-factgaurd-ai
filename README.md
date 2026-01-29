@@ -1,16 +1,32 @@
-# React + Vite
+# FactGuard: AI Verification System (Hackathon Project)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Autonomous multi-agent constellation verifying truth at the speed of light.
 
-Currently, two official plugins are available:
+## Project Overview
+FactGuard is a real-time AI verification dashboard designed to debunk misinformation and verify claims using a multi-agent system (Planner, Executor, Evaluator).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- **Real-time Claim Analysis**: Verify text, URLs, or documents.
+- **Multi-Agent Workflow**: Visualized agent reasoning process.
+- **Live Monitoring**: System status, global misinformation levels, and news ticker.
+- **Cyberpunk UI**: A futuristic, high-contrast interface.
 
-## React Compiler
+## Tech Stack
+- React 19 + Vite
+- TailwindCSS
+- Lucide React Icons
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## License
+MIT
