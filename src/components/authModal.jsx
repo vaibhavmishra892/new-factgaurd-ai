@@ -42,7 +42,8 @@ export default function AuthModal({ type, onClose, onAuth }) {
     setError("");
     setLoading(true);
 
-    const endpoint = isSignup ? "/api/auth/signup" : "/api/auth/login";
+    const API_BASE = import.meta.env.VITE_API_URL || '/api';
+    const endpoint = isSignup ? `${API_BASE}/auth/signup` : `${API_BASE}/auth/login`;
 
     // Payload preparation
     const payload = isSignup
