@@ -14,10 +14,21 @@ class ImageTextExtractorTool:
     """Tool for extracting text from images using OCR"""
     
     def __init__(self):
-        # Configure tesseract path if needed (Windows)
-        # Uncomment and adjust if tesseract is not in PATH
+        # Check standard Linux paths for Docker/Render
+        possible_paths = [
+            '/usr/bin/tesseract',
+            '/usr/local/bin/tesseract',
+            '/app/.apt/usr/bin/tesseract'
+        ]
+        
+        for p in possible_paths:
+            if os.path.exists(p):
+                pytesseract.pytesseract.tesseract_cmd = p
+                print(f"DEBUG: Found tesseract at {p}")
+                break
+        
+        # Windows fallback (Keep commented)
         # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-        pass
     
     def is_valid_image(self, file_path: str) -> bool:
         """
