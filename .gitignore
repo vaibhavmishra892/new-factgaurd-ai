@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment Variables (Secrets)
+.env
+.env.production
+.env.development
+
+# Python
+venv
+__pycache__
+*.pyc
+factgaurd-ai/venv
+factgaurd-ai/__pycache__

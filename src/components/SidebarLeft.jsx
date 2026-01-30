@@ -8,13 +8,16 @@ import {
   Database,
 } from "lucide-react";
 
-export default function SidebarLeft({ confidence }) {
+export default function SidebarLeft({ result }) {
 
   /* =====================
      THREAT LEVEL LOGIC
   ===================== */
+  /* =====================
+     THREAT LEVEL LOGIC
+  ===================== */
   const getLevel = () => {
-    if (confidence == null) {
+    if (!result) {
       return {
         label: "--",
         text: "STANDBY",
@@ -22,27 +25,35 @@ export default function SidebarLeft({ confidence }) {
         ring: "border-slate-500",
       };
     }
-    if (confidence < 60) {
+
+    const status = result.status?.toUpperCase() || '';
+
+    // VERIFIED TRUE -> GREEN (Minimal Threat)
+    if (status.includes('VERIFIED') || status.includes('SUPPORTED') || status.includes('TRUE')) {
+      return {
+        label: "LO",
+        text: "MINIMAL THREAT",
+        color: "text-emerald-400",
+        ring: "border-emerald-500",
+      };
+    }
+
+    // VERIFIED FALSE -> RED (Critical Threat)
+    if (status.includes('CONTRADICTED') || status.includes('FALSE') || status.includes('FAKE') || status.includes('DEBUNKED')) {
       return {
         label: "HI",
-        text: "ELEVATED THREAT",
+        text: "CRITICAL THREAT",
         color: "text-red-500",
         ring: "border-red-500",
       };
     }
-    if (confidence < 85) {
-      return {
-        label: "MD",
-        text: "MEDIUM RISK",
-        color: "text-yellow-400",
-        ring: "border-yellow-500",
-      };
-    }
+
+    // UNCERTAIN -> YELLOW (Elevated)
     return {
-      label: "LO",
-      text: "LOW THREAT",
-      color: "text-emerald-400",
-      ring: "border-emerald-500",
+      label: "MD",
+      text: "ELEVATED THREAT",
+      color: "text-yellow-400",
+      ring: "border-yellow-500",
     };
   };
 

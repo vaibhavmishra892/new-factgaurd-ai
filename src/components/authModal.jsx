@@ -31,15 +31,46 @@ export default function AuthModal({ type, onClose, onAuth }) {
     form.email &&
     form.password.length >= 6;
 
-  const handleSubmit = (e) => {
+  /* ======================
+     API CALL HANDLERS
+  ====================== */
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    onAuth({
-      email: form.email,
-      name: `${form.firstName} ${form.lastName}`,
-    });
+    const endpoint = isSignup ? "/api/auth/signup" : "/api/auth/login";
 
-    onClose();
+    // Payload preparation
+    const payload = isSignup
+      ? { email: form.email, password: form.password, firstName: form.firstName, lastName: form.lastName, phone: form.phone }
+      : { email: form.email, password: form.password };
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Authentication failed");
+      }
+
+      // Success!
+      onAuth(data.user);
+      onClose();
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -120,26 +151,31 @@ export default function AuthModal({ type, onClose, onAuth }) {
 
           {isSignup && (
             <p
-              className={`text-xs ${
-                passwordStrength() === "Weak"
-                  ? "text-red-500"
-                  : passwordStrength() === "Medium"
+              className={`text-xs ${passwordStrength() === "Weak"
+                ? "text-red-500"
+                : passwordStrength() === "Medium"
                   ? "text-yellow-500"
                   : "text-green-500"
-              }`}
+                }`}
             >
               Password strength: {passwordStrength()}
             </p>
           )}
 
+
+          {error && (
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs">
+              {error}
+            </div>
+          )}
+
           <button
             type="submit"
-            disabled={!isValid}
-            className={`btn-primary w-full ${
-              !isValid ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            disabled={!isValid || loading}
+            className={`btn-primary w-full flex items-center justify-center gap-2 ${!isValid || loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
           >
-            {isSignup ? "Create Account" : "Login"}
+            {loading ? "Processing..." : (isSignup ? "Create Account" : "Login")}
           </button>
         </form>
 

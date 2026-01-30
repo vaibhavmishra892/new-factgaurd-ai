@@ -26,7 +26,8 @@ export default function LiveLogs({ isVerifying, result }) {
             let i = 1;
             const interval = setInterval(() => {
                 if (i < MOCK_LOGS.length) {
-                    setLogs(prev => [...prev, MOCK_LOGS[i]]);
+                    const currentLog = MOCK_LOGS[i];
+                    setLogs(prev => [...prev, currentLog]);
                     i++;
                 } else {
                     clearInterval(interval);
