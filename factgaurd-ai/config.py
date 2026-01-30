@@ -8,6 +8,10 @@ class Config:
     """Configuration class for API keys and settings"""
     
     # LLM Configuration (Generic)
+    # Prevents CrewAI from crashing if OPENAI_API_KEY is missing (we use Cerebras)
+    if not os.getenv("OPENAI_API_KEY"):
+        os.environ["OPENAI_API_KEY"] = "NA"
+
     LLM_API_KEY = os.getenv("LLM_API_KEY") or os.getenv("CEREBRAS_API_KEY", "")
     LLM_MODEL = os.getenv("LLM_MODEL", "llama3-70b-8192") # Default to a common Llama identifier
     LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.3"))
