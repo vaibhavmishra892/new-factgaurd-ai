@@ -9,3 +9,4 @@ pillow
 pytesseract
 beautifulsoup4
 pytest
+gunicorn
