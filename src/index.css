@@ -2,131 +2,211 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===============================
+   ROOT THEME (DEFAULT = DARK)
+================================ */
 :root {
-  /* Default (Dark Mode) - CYBERPUNK VIBRANT */
   --color-bg: #030712;
-  /* Gray 950 - Pitch black */
 
-  --color-text-main: #F8FAFC;
-  --color-text-muted: #94A3B8;
-  --color-text-bolder: #FFFFFF;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-text-bolder: #ffffff;
 
-  /* Neon Accents */
-  --color-accent-primary: #D946EF;
-  /* Fuchsia 500 */
-  --color-accent-secondary: #06B6D4;
-  /* Cyan 500 */
-  --color-accent-tertiary: #8B5CF6;
-  /* Violet 500 */
+  --color-accent-primary: #d946ef;
+  --color-accent-secondary: #06b6d4;
+  --color-accent-tertiary: #8b5cf6;
 
-  --color-accent-glow: rgba(217, 70, 239, 0.4);
-
-  --color-border: rgba(255, 255, 255, 0.1);
   --color-glass-bg: rgba(10, 10, 20, 0.7);
-
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
   --radius-lg: 1rem;
 }
 
+/* ===============================
+   LIGHT MODE VARIABLES
+================================ */
 body.light-mode {
-  /* High contrast light mode */
-  --color-bg: #FFFFFF;
-  --color-text-main: #0F172A;
-  --color-glass-bg: rgba(255, 255, 255, 0.9);
+  --color-bg: #ffffff;
+
+  --color-text-main: #020617;     /* slate-950 */
+  --color-text-muted: #334155;    /* slate-700 */
+  --color-text-bolder: #020617;
+
+  --color-glass-bg: rgba(255, 255, 255, 0.95);
 }
 
+/* ===============================
+   GLOBAL BODY
+================================ */
 body {
   margin: 0;
-  font-family: var(--font-family);
+  font-family: system-ui, -apple-system, sans-serif;
   background-color: var(--color-bg);
-  /* Vibrant Mesh Gradient Background */
-  background-image:
-    radial-gradient(at 0% 0%, rgba(217, 70, 239, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
-  background-attachment: fixed;
   color: var(--color-text-main);
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Glassmorphism Utilities */
-.glass-panel {
-  background: var(--color-glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.glass-panel:hover {
-  border-color: rgba(217, 70, 239, 0.4);
-  box-shadow: 0 8px 32px 0 rgba(217, 70, 239, 0.15);
-  transform: translateY(-2px);
-}
-
-.glass-input {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* ===============================
+   TEXT UTILITIES
+================================ */
+.body-text {
   color: var(--color-text-main);
-  transition: all 0.2s;
 }
 
-.glass-input:focus {
-  border-color: var(--color-accent-secondary);
-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25);
-  background: rgba(0, 0, 0, 0.5);
-  outline: none;
-}
-
-/* Vibrant Button */
-.btn-primary {
-  background: linear-gradient(135deg, #D946EF 0%, #8B5CF6 100%);
-  color: #FFFFFF;
-  font-weight: 700;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 0 15px rgba(217, 70, 239, 0.3);
-  transition: all 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  cursor: pointer;
-  letter-spacing: 0.025em;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 0 25px rgba(217, 70, 239, 0.5);
-  filter: brightness(1.1);
+.body-text-muted {
+  color: var(--color-text-muted);
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #D946EF, #06B6D4);
+  background: linear-gradient(to right, #d946ef, #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* ===============================
+   GLASS PANEL
+================================ */
+.glass-panel {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+/* ===============================
+   LIGHT MODE – TEXT VISIBILITY FIX
+================================ */
+
+/* Force readable text everywhere */
+body.light-mode .glass-panel,
+body.light-mode .glass-panel * {
+  color: #020617;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+/* Muted secondary text */
+body.light-mode .glass-panel .text-slate-400,
+body.light-mode .glass-panel .text-slate-500,
+body.light-mode .glass-panel .text-gray-400,
+body.light-mode .glass-panel .text-gray-500 {
+  color: #334155 !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+/* ===============================
+   LIGHT MODE – HOVER EFFECT (BOX ONLY)
+================================ */
+
+/* List items & rows */
+body.light-mode .glass-panel li,
+body.light-mode .glass-panel div[class*="flex"],
+body.light-mode .glass-panel .row {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-radius: 8px;
 }
 
-.body-text,
-.body-text-muted {
-  color: inherit;
-  /* Fallback */
+/* Hover background */
+body.light-mode .glass-panel li:hover,
+body.light-mode .glass-panel div[class*="flex"]:hover,
+body.light-mode .glass-panel .row:hover {
+  background-color: rgba(15, 23, 42, 0.06); /* soft slate */
+}
+
+/* KEEP TEXT VISIBLE */
+body.light-mode .glass-panel li:hover *,
+body.light-mode .glass-panel div[class*="flex"]:hover *,
+body.light-mode .glass-panel .row:hover * {
+  color: inherit !important;
+}
+
+/* ===============================
+   HEADER (LIGHT MODE FIX)
+================================ */
+body.light-mode header a,
+body.light-mode header button {
+  color: #020617;
+}
+
+body.light-mode header a:hover,
+body.light-mode header button:hover {
+  color: #7c3aed;
+}
+
+/* ===============================
+   FLIP CARD SUPPORT (About Us)
+================================ */
+.perspective {
+  perspective: 1200px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+/* ===============================
+   FIX INPUT / TEXTAREA BACKGROUND
+================================ */
+
+/* Dark mode input */
+textarea,
+input {
+  background-color: rgba(15, 23, 42, 0.85); /* slate-900 */
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Light mode input */
+body.light-mode textarea,
+body.light-mode input {
+  background-color: rgba(248, 250, 252, 0.95); /* slate-50 */
+  color: #020617;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Placeholder visibility */
+textarea::placeholder,
+input::placeholder {
+  color: #94a3b8;
+}
+
+body.light-mode textarea::placeholder,
+body.light-mode input::placeholder {
+  color: #64748b;
+}
+/* ===== ABOUT US FLIP CARD (FINAL) ===== */
+
+.perspective {
+  perspective: 1200px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+/* 🔥 THIS IS THE KEY FIX */
+.perspective:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.flip-back {
+  transform: rotateY(180deg);
 }
