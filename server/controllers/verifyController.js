@@ -12,7 +12,17 @@ export const verifyClaim = async (req, res) => {
         }
 
         // Call Python AI Service
-        const pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://127.0.0.1:8000/verify';
+        // Call Python AI Service
+        let pythonServiceUrl = process.env.PYTHON_SERVICE_URL || 'http://127.0.0.1:8000/verify';
+        pythonServiceUrl = pythonServiceUrl.trim().replace(/\/+$/, ''); // specific fix for trailing slash
+
+        // If the user forgot /verify, append it?
+        // Actually, if they provided just domain, we should append it.
+        // But usually we ask for full URL.
+        // If they provided full URL .../verify, good.
+        // If they provided .../verify/, we stripped slash.
+        // If they provided .../ (root), we stripped slash -> ...
+        // Let's rely on user instruction, but stripping slash is safe.
 
         try {
             console.log(`Calling AI service at ${pythonServiceUrl}`);
