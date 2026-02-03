@@ -288,7 +288,8 @@ export default function App() {
     } catch (error) {
       console.error("Error verifying claim:", error);
       setAgentStates({ planner: 'idle', executor: 'idle', evaluator: 'idle' });
-      alert("Failed to verify claim. Please check backend connection.");
+      const debugUrl = import.meta.env.VITE_API_URL || '/api (fallback)';
+      alert(`Connection Failed!\n\nTrying to reach: ${debugUrl}/verify\n\nError: ${error.message}\n\nMake sure VITE_API_URL is set in your deployment!`);
     } finally {
       if (shimmerInterval) clearInterval(shimmerInterval);
       setIsVerifying(false);
